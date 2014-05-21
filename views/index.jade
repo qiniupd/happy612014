@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  div.swiper-container
+    div.swiper-wrapper
+      div.swiper-slide
+        img.slide(src='/img/1.jpg')
+      div.swiper-slide
+        img.slide(src='/img/2.jpg')
+      div.swiper-slide
+        img.slide(src='/img/3.jpg')
+
+  //- div#cover
+  //-   img(src='/img/1.jpg')
+  //-   img(src='/img/2.jpg')
+  //-   img(src='/img/3.jpg')
+
+  div#uploader-wrapper
+    p#progress
+    p#error
+    button#upload-btn upload
