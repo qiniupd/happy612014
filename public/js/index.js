@@ -180,13 +180,41 @@ Q.imgReady = (function() {
   };
 })();
 
+var Local = window.Local || {};
+Local.generation = '';
 
 $(function() {
   Q.initPluploader('upload-btn', 'uploader-wrapper', 'progress', 'error');
 
   var mySwiper = $('.swiper-container').swiper({
     //Your options here:
-    mode: 'horizontal'
+    mode: 'horizontal',
+    pagination: '#navigation',
+    paginationAsRange: true,
+    paginationClickable: true,
+    calculateHeight: true
     //etc..
   });
+
+  $('.start-btn').click(function(){
+    $('#cover').hide();
+    $('#generation-choose').show();
+  });
+
+  $('#g80').click(function(){
+    Local.generation = '80';
+    $('#generation-choose').hide();
+    $('#guess-game').show(initGame);
+  });
+
+  $('#g90').click(function(){
+    Local.generation = '90';
+    $('#generation-choose').hide();
+    $('#guess-game').show(initGame);
+  });
+
+  var initGame = function(){
+    $('#guess-game .ge').text(Local.generation);
+  };
+
 });
