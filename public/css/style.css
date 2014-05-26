@@ -1,3 +1,7 @@
+html,
+body {
+  height: 100%;
+}
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -37,9 +41,44 @@ a {
 }
 #generation-choose {
   display: none;
+  height: 100%;
+}
+#generation-choose .container {
+  height: 100%;
+}
+#generation-choose .placeholder {
+  height: 50%;
+}
+#generation-choose #g80,
+#generation-choose #g90 {
+  height: 50px;
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 #init-game {
   display: none;
+  height: 100%;
+}
+#init-game .container {
+  height: 100%;
+}
+#init-game .full {
+  height: 100%;
+}
+#init-game img {
+  width: 200px;
+  height: 200px;
+}
+#init-game .btn-line {
+  text-align: center;
+  margin-top: 5%;
+}
+#init-game .btn-line #reset-group,
+#init-game .btn-line #start-guess {
+  width: 30%;
+  margin-right: 2%;
+  margin-left: 2%;
+  font-size: 16px;
 }
 #guess-game {
   display: none;
