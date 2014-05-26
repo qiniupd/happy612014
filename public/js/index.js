@@ -338,6 +338,8 @@ $(function() {
         $('.progress').text(pass + '/' + allLen);
         var question = questionGroup[pass - 1];
 
+        $('#guess-game').find('.main-pic').attr('src', question.imgurl);
+
         var tmplInput = $('<input type="text" class="charactor">');
         var tmplMask = $('<span class="charactor"></span>');
         var cs = $('<div class="answers-wrapper"></div>');
@@ -410,5 +412,6 @@ $(function() {
     // });
     
     $('#gc').click();
-    $('#g80').click();
+    // $('#g80').click();
+    // $('#start-guess').click();
 });

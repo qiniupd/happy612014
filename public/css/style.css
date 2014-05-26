@@ -49,12 +49,6 @@ a {
 #generation-choose .placeholder {
   height: 50%;
 }
-#generation-choose #g80,
-#generation-choose #g90 {
-  height: 50px;
-  font-size: 20px;
-  margin-bottom: 20px;
-}
 #init-game {
   display: none;
   height: 100%;
@@ -82,6 +76,25 @@ a {
 }
 #guess-game {
   display: none;
+}
+#guess-game .center {
+  text-align: center;
+}
+#guess-game .main-pic {
+  max-height: 400px;
+  max-width: 400px;
+}
+#guess-game .answer-line {
+  margin-top: 20px;
+}
+#guess-game .answer-line .charactor {
+  display: inline-block;
+  font-size: 20px;
+  width: 34px;
+  line-height: 30px;
+  border: 1px solid #a5a5a5;
+  padding: 1px;
+  margin: 0 5px;
 }
 #upload {
   display: none;
