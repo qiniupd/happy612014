@@ -3,10 +3,8 @@ extends layout
 block content
   include cover.jade
   include generation-choose.jade
+  include init-game.jade
   include guess-game.jade
-  include final-present
-
-  //- div#uploader-wrapper
-  //-   p#progress
-  //-   p#error
-  //-   button#upload-btn upload
+  include upload.jade
+  include select-template.jade
+  include final-present.jade

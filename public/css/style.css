@@ -38,7 +38,16 @@ a {
 #generation-choose {
   display: none;
 }
+#init-game {
+  display: none;
+}
 #guess-game {
+  display: none;
+}
+#upload {
+  display: none;
+}
+#select-template {
   display: none;
 }
 #final-present {
