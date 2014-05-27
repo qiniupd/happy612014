@@ -184,6 +184,12 @@ var Local = window.Local || {};
 Local.generation = '';
 
 $(function() {
+    var h = window.innerHeight,
+        w = window.innerWidth;
+
+    $('#cover').css('width', w);
+    $('#cover').css('height', h);
+
     Q.initPluploader('upload-btn', 'uploader-wrapper', 'progress', 'error');
 
     $('.swiper-container').swiper({
@@ -192,7 +198,10 @@ $(function() {
         pagination: '#navigation',
         paginationAsRange: true,
         paginationClickable: true,
-        calculateHeight: true
+        calculateHeight: true,
+        keyboardControl: true,
+        mousewheelControl: true
+        // cssWidthAndHeight: true
         //etc..
     });
 
@@ -295,7 +304,7 @@ $(function() {
             l[i] = t;
         }
         var ret = l.slice(0, 4);
-        console.log([ret[0].imgurl, ret[1].imgurl, ret[2].imgurl, ret[3].imgurl]);
+        // console.log([ret[0].imgurl, ret[1].imgurl, ret[2].imgurl, ret[3].imgurl]);
         questionGroup = ret;
 
         return ret;
@@ -339,6 +348,11 @@ $(function() {
         $('#guess-game').find('.answer-line').html('');
         $('#guess-game').find('.answer-line').append(cs);
     };
+
+    $('#return').click(function() {
+        $('#guess-game').hide(0);
+        $('#init-game').show(0);
+    });
 
     $('#check').click(function() {
         var a = '';
