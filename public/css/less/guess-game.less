@@ -4,12 +4,32 @@
 	.center {
 		text-align: center;
 	}
-	
-	.main-pic {
-		max-height: 400px;
-		max-width: 400px;
+
+	.main-pic-wrapper {
+		position: relative;
+		.main-pic {
+			width: 100%;
+			border: 10px solid white;
+			// height: 400px;
+			// width: 400px;
+		}
+		#main-mask {
+			position: absolute;
+			display: none;
+			width: 100%;
+			height: 100%;
+			top: 0px;
+			background-color: rgba(0,0,0,0.75);
+			p {
+				color: white;
+				font-size: 80px;
+				position: relative;
+				top: 50%;
+				margin-top: -40px;
+			}
+		}
 	}
-	
+
 	.answer-line {
 		margin-top: 20px;
 		.charactor {
@@ -20,6 +40,24 @@
 			border: 1px solid #a5a5a5;
 			padding: 1px;
 			margin: 0 5px;
+			background-color: white;
 		}
+	}
+
+	.btn-line {
+		margin-top: 20px;
+		text-align: center;
+		#check, #return {
+			width: 100%;
+		}
+		#start-upload {
+			width: 60%;
+		}
+	}
+
+	#f-err {
+		text-align: center;
+		color: #ea4517;
+		display: none;
 	}
 }

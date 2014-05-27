@@ -9,6 +9,17 @@ body {
 a {
   color: #00B7FF;
 }
+.btn-main {
+  background-color: #ffa41c;
+  color: white;
+}
+.btn-main:hover {
+  background-color: #ed9315;
+  color: white;
+}
+.btn-main:focus {
+  color: white;
+}
 #cover {
   position: relative;
   top: 0;
@@ -67,8 +78,8 @@ a {
   height: 100%;
 }
 #init-game img {
-  width: 200px;
-  height: 200px;
+  width: 50%;
+  border: 5px solid white;
 }
 #init-game .btn-line {
   text-align: center;
@@ -76,10 +87,7 @@ a {
 }
 #init-game .btn-line #reset-group,
 #init-game .btn-line #start-guess {
-  width: 30%;
-  margin-right: 2%;
-  margin-left: 2%;
-  font-size: 16px;
+  width: 100%;
 }
 #guess-game {
   display: none;
@@ -87,9 +95,27 @@ a {
 #guess-game .center {
   text-align: center;
 }
-#guess-game .main-pic {
-  max-height: 400px;
-  max-width: 400px;
+#guess-game .main-pic-wrapper {
+  position: relative;
+}
+#guess-game .main-pic-wrapper .main-pic {
+  width: 100%;
+  border: 10px solid white;
+}
+#guess-game .main-pic-wrapper #main-mask {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+#guess-game .main-pic-wrapper #main-mask p {
+  color: white;
+  font-size: 80px;
+  position: relative;
+  top: 50%;
+  margin-top: -40px;
 }
 #guess-game .answer-line {
   margin-top: 20px;
@@ -102,12 +128,69 @@ a {
   border: 1px solid #a5a5a5;
   padding: 1px;
   margin: 0 5px;
+  background-color: white;
+}
+#guess-game .btn-line {
+  margin-top: 20px;
+  text-align: center;
+}
+#guess-game .btn-line #check,
+#guess-game .btn-line #return {
+  width: 100%;
+}
+#guess-game .btn-line #start-upload {
+  width: 60%;
+}
+#guess-game #f-err {
+  text-align: center;
+  color: #ea4517;
+  display: none;
 }
 #upload {
   display: none;
 }
+#upload #uploader-wrapper {
+  margin-top: 40%;
+  width: 100%;
+  height: 300px;
+  background-color: white;
+}
+#upload #uploader-wrapper #upload-btn {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  vertical-align: middle;
+}
+#upload #uploader-wrapper span {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  top: 50%;
+  text-align: center;
+  width: 100%;
+  margin-top: -12px;
+  font-size: 24px;
+  color: #868686;
+  margin-bottom: -24px;
+}
+#upload #uploader-wrapper #photo-preview {
+  width: 100%;
+  position: relative;
+  top: -20px;
+  z-index: 2;
+}
+#upload #next-select {
+  width: 100%;
+  margin-top: 40px;
+}
 #select-template {
   display: none;
+}
+#select-template .thumb-tmpl-w {
+  width: 100%;
+}
+#select-template .thumb-tmpl-h {
+  width: 100%;
 }
 #final-present {
   display: none;

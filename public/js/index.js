@@ -5,6 +5,8 @@
 
 var Q = window.Q || {};
 
+Q.photoUrl = '';
+
 Q.initPluploader = function(browse_button_id, container_id, progress_id, error_id) {
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
@@ -60,6 +62,9 @@ Q.initPluploader = function(browse_button_id, container_id, progress_id, error_i
             case 'uploadPhoto':
                 prefix = 'photo/';
                 break;
+            case 'upload-btn':
+                prefix = 'photo/';
+                break;
             default:
                 prefix = 'default/';
         }
@@ -79,13 +84,15 @@ Q.initPluploader = function(browse_button_id, container_id, progress_id, error_i
 
     uploader.bind('FileUploaded', function(up, file, info) {
         var res = $.parseJSON(info.response);
-        var link = 'http://zblq.qiniudn.com/';
-        if (res.key.indexOf('avatar/') > -1) {
-            Q.avatarUrl = link + res.key;
-            $('#avatar-preview').attr('src', Q.avatarUrl + '-ava');
-        } else if (res.key.indexOf('photo/') > -1) {
-            Q.setPhoto(link + res.key);
-        }
+        var link = 'http://hc61.qiniudn.com/';
+        // if (res.key.indexOf('avatar/') > -1) {
+        //     Q.avatarUrl = link + res.key;
+        //     $('#avatar-preview').attr('src', Q.avatarUrl + '-ava');
+        // } else if (res.key.indexOf('photo/') > -1) {
+        //     Q.setPhoto(link + res.key);
+        // }
+        Q.photoUrl = link + res.key;
+        $('#photo-preview').attr('src', Q.photoUrl);
         document.getElementById(progress_id).innerHTML = '上传成功';
     });
 };
@@ -190,6 +197,8 @@ $(function() {
     $('#cover').css('width', w);
     $('#cover').css('height', h);
 
+    var dn = 'http://hc61.qiniudn.com/';
+
     Q.initPluploader('upload-btn', 'uploader-wrapper', 'progress', 'error');
 
     $('.swiper-container').swiper({
@@ -230,51 +239,54 @@ $(function() {
         $('#guess-game').show(0, initGame);
     });
 
+    var g80Pre = dn + 'g80/',
+        g90Pre = dn + 'g90/',
+        suf1 = '-4004';
     var allQuestions = {
         g80: [{
-            imgurl: '/img/80/1.jpg',
+            imgurl: g80Pre + '1.jpg',
             answer: '拍纸片'
         }, {
-            imgurl: '/img/80/2.png',
+            imgurl: g80Pre + '2.png',
             answer: '俄罗斯方块'
         }, {
-            imgurl: '/img/80/3.jpg',
+            imgurl: g80Pre + '3.jpg',
             answer: '撞拐'
         }, {
-            imgurl: '/img/80/4.jpg',
+            imgurl: g80Pre + '4.jpg',
             answer: 'MSDOS'
         }, {
-            imgurl: '/img/80/5.jpg',
+            imgurl: g80Pre + '5.jpg',
             answer: 'penmac'
         }, {
-            imgurl: '/img/80/6.jpg',
+            imgurl: g80Pre + '6.jpg',
             answer: 'commodore64p'
         }, {
-            imgurl: '/img/80/7.jpg',
+            imgurl: g80Pre + '7.jpg',
             answer: '棉花糖'
         }, {
-            imgurl: '/img/80/8.jpg',
+            imgurl: g80Pre + '8.jpg',
             answer: '娃娃头雪糕'
         }, {
-            imgurl: '/img/80/9.jpg',
+            imgurl: g80Pre + '9.jpg',
             answer: '变形金刚'
         }, {
-            imgurl: '/img/80/10.jpg',
+            imgurl: g80Pre + '10.jpg',
             answer: '巴巴爸爸'
         }, {
-            imgurl: '/img/80/11.jpg',
+            imgurl: g80Pre + '11.jpg',
             answer: '希瑞'
         }, {
-            imgurl: '/img/80/12.jpg',
+            imgurl: g80Pre + '12.jpg',
             answer: '圣斗士星矢'
         }, {
-            imgurl: '/img/80/13.jpg',
+            imgurl: g80Pre + '13.jpg',
             answer: '阿凡提'
         }, {
-            imgurl: '/img/80/14.jpg',
+            imgurl: g80Pre + '14.jpg',
             answer: '爆米花'
         }, {
-            imgurl: '/img/80/15.jpeg',
+            imgurl: g80Pre + '15.jpeg',
             answer: '拨浪鼓'
         }],
         g90: [{
@@ -323,10 +335,10 @@ $(function() {
         questionGroup = ret;
 
         var p = $('#img-puzzle-group');
-        p.find('.tl').attr('src', ret[0].imgurl);
-        p.find('.tr').attr('src', ret[1].imgurl);
-        p.find('.bl').attr('src', ret[2].imgurl);
-        p.find('.br').attr('src', ret[3].imgurl);
+        p.find('.tl').attr('src', ret[0].imgurl + suf1);
+        p.find('.tr').attr('src', ret[1].imgurl + suf1);
+        p.find('.bl').attr('src', ret[2].imgurl + suf1);
+        p.find('.br').attr('src', ret[3].imgurl + suf1);
 
         return ret;
     };
@@ -344,10 +356,10 @@ $(function() {
     };
 
     var setGuess = function() {
-        $('.progress').text(pass + '/' + allLen);
+        $('#guess-game').find('.pg').text(pass + '/' + allLen);
         var question = questionGroup[pass - 1];
 
-        $('#guess-game').find('.main-pic').attr('src', question.imgurl);
+        $('#guess-game').find('.main-pic').attr('src', question.imgurl + suf1);
 
         var tmplInput = $('<input type="text" class="charactor">');
         var tmplMask = $('<span class="charactor"></span>');
@@ -377,27 +389,38 @@ $(function() {
         $('#init-game').show(0);
     });
 
+    var canCheck = true;
     $('#check').click(function() {
-        var a = '';
-        $('#guess-game').find('.charactor').each(function() {
-            if ($(this).is('input')) {
-                a += $(this).val();
-            } else {
-                a += $(this).text();
+        if (canCheck) {
+            var a = '';
+            $('#guess-game').find('.charactor').each(function() {
+                if ($(this).is('input')) {
+                    a += $(this).val();
+                } else {
+                    a += $(this).text();
+                }
+            });
+            if (a !== questionGroup[pass - 1].answer) {
+                $('#f-err').show();
+                return;
             }
-        });
-        if (a !== questionGroup[pass - 1].answer) {
-            alert('Naive');
-            return;
+            $('#f-err').hide();
+            pass += 1;
+            if (pass <= allLen) {
+                canCheck = false;
+                $('#main-mask').slideDown(200, function() {
+                    window.setTimeout(function() {
+                        $('#main-mask').slideUp();
+                        canCheck = true;
+                        setGuess();
+                    }, 800);
+                });
+                return;
+            }
+            // alert('all clear');
+            $('#guess-game').find('.btn-line').html('');
+            $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main">生成明信片</button>');
         }
-        pass += 1;
-        if (pass <= allLen) {
-            setGuess();
-            return;
-        }
-        alert('all clear');
-        $('#guess-game').find('.btn-line').html('');
-        $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn">生成明信片</button>');
     });
 
     $('body').on('click', '#start-upload', function() {
@@ -406,26 +429,19 @@ $(function() {
     });
 
     $('#next-select').click(function() {
+        // if (Q.photoUrl !== '') {
         $('#upload').hide(0);
         $('#select-template').show(0);
+        // } else {
+        // alert('请上传您的照片');
+        // }
     });
 
-    // var passGuess = function() {
-    //     pass++;
-    //     if (pass > allLen) {
-    //         $('body').trigger('allPass');
-    //     } else {
-    //         setGuess();
-    //     }
-    // };
-
-    // $('body').on('allPass', function() {
-    //     alert('all pass');
-    //     $('#guess-game').hide(0);
-    //     $('#final-present').show(0, initGame);
-    // });
-    
     $('#gc').click();
-    // $('#g80').click();
-    // $('#start-guess').click();
+    $('#g80').click();
+    $('#start-guess').click();
+    $('#guess-game').find('.btn-line').html('');
+    $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main">生成明信片</button>');
+    $('#start-upload').click();
+    // $('#next-select').click();
 });
