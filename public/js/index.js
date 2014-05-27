@@ -232,35 +232,50 @@ $(function() {
 
     var allQuestions = {
         g80: [{
-            imgurl: '80-1',
-            answer: 'abcd'
+            imgurl: '/img/80/1.jpg',
+            answer: '拍纸片'
         }, {
-            imgurl: '80-2',
-            answer: 'abcd'
+            imgurl: '/img/80/2.png',
+            answer: '俄罗斯方块'
         }, {
-            imgurl: '80-3',
-            answer: 'abcd'
+            imgurl: '/img/80/3.jpg',
+            answer: '撞拐'
         }, {
-            imgurl: '80-4',
-            answer: 'abcd'
+            imgurl: '/img/80/4.jpg',
+            answer: 'MSDOS'
         }, {
-            imgurl: '80-5',
-            answer: 'abcd'
+            imgurl: '/img/80/5.jpg',
+            answer: 'penmac'
         }, {
-            imgurl: '80-6',
-            answer: 'abcd'
+            imgurl: '/img/80/6.jpg',
+            answer: 'commodore64p'
         }, {
-            imgurl: '80-7',
-            answer: 'abcd'
+            imgurl: '/img/80/7.jpg',
+            answer: '棉花糖'
         }, {
-            imgurl: '80-8',
-            answer: 'abcd'
+            imgurl: '/img/80/8.jpg',
+            answer: '娃娃头雪糕'
         }, {
-            imgurl: '80-9',
-            answer: 'abcd'
+            imgurl: '/img/80/9.jpg',
+            answer: '变形金刚'
         }, {
-            imgurl: '80-10',
-            answer: 'abcd'
+            imgurl: '/img/80/10.jpg',
+            answer: '巴巴爸爸'
+        }, {
+            imgurl: '/img/80/11.jpg',
+            answer: '希瑞'
+        }, {
+            imgurl: '/img/80/12.jpg',
+            answer: '圣斗士星矢'
+        }, {
+            imgurl: '/img/80/13.jpg',
+            answer: '阿凡提'
+        }, {
+            imgurl: '/img/80/14.jpg',
+            answer: '爆米花'
+        }, {
+            imgurl: '/img/80/15.jpeg',
+            answer: '拨浪鼓'
         }],
         g90: [{
             imgurl: '90-1',
@@ -307,6 +322,12 @@ $(function() {
         // console.log([ret[0].imgurl, ret[1].imgurl, ret[2].imgurl, ret[3].imgurl]);
         questionGroup = ret;
 
+        var p = $('#img-puzzle-group');
+        p.find('.tl').attr('src', ret[0].imgurl);
+        p.find('.tr').attr('src', ret[1].imgurl);
+        p.find('.bl').attr('src', ret[2].imgurl);
+        p.find('.br').attr('src', ret[3].imgurl);
+
         return ret;
     };
 
@@ -325,6 +346,8 @@ $(function() {
     var setGuess = function() {
         $('.progress').text(pass + '/' + allLen);
         var question = questionGroup[pass - 1];
+
+        $('#guess-game').find('.main-pic').attr('src', question.imgurl);
 
         var tmplInput = $('<input type="text" class="charactor">');
         var tmplMask = $('<span class="charactor"></span>');
@@ -401,4 +424,8 @@ $(function() {
     //     $('#guess-game').hide(0);
     //     $('#final-present').show(0, initGame);
     // });
+    
+    $('#gc').click();
+    // $('#g80').click();
+    // $('#start-guess').click();
 });

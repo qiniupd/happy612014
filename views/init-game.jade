@@ -1,18 +1,19 @@
 div#init-game
   div.container
     div.row
-      h3 你还记得下面的场景吗？
-      div.col-md-10.col-md-offset-1.puzzle
+      div.col-md-12
+        h3 你还记得下面的场景吗？
+      div.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2.col-xs-10.col-xs-offset-1#img-puzzle-group
         div.row
-          div.col-md-6
+          div.col-md-6.col-sm-6.col-xs-6
             img.tl
-          div.col-md-6
+          div.col-md-6.col-sm-6.col-xs-6
             img.tr
-        div.row
-          div.col-md-6
+          div.col-md-6.col-sm-6.col-xs-6
             img.bl
-          div.col-md-6
+          div.col-md-6.col-sm-6.col-xs-6
             img.br
     div.row
-      button.col-md-2.col-md-offset-3#reset-group 换一组
-      button.col-md-2.col-md-offset-2#start-guess 确定
+      div.col-md-12.btn-line
+        button.btn#reset-group 换一组
+        button.btn#start-guess 确定
