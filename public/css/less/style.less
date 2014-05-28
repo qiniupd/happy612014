@@ -9,6 +9,14 @@ a {
   color: #00B7FF;
 }
 
+.btn {
+  border-radius: 0px;
+}
+
+.btn-img {
+  width: 100%;
+}
+
 .btn-main {
   background-color: #ffa41c;
   color: white;
@@ -21,20 +29,29 @@ a {
   }
 }
 
-// #cover,
-// #generation-choose,
-// #init-game,
-// #guess-game,
-// #upload,
-// #select-template,
-// #final-present {
-//   .bg {
-//     position: absolute;
-//     top: 0px;
-//     z-index: -1;
-//     margin: 0 auto;
-//   }
-// }
+#bg {
+  display: none;
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: 50%;
+  bottom: 0px;
+  img {
+    height: 100%;
+  }
+}
+
+#generation-choose,
+#init-game,
+#guess-game,
+#upload,
+#select-template,
+#final-present {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 50%;
+}
 
 @import "cover";
 @import "generation-choose";

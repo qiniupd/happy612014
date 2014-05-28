@@ -9,6 +9,12 @@ body {
 a {
   color: #00B7FF;
 }
+.btn {
+  border-radius: 0px;
+}
+.btn-img {
+  width: 100%;
+}
 .btn-main {
   background-color: #ffa41c;
   color: white;
@@ -19,6 +25,28 @@ a {
 }
 .btn-main:focus {
   color: white;
+}
+#bg {
+  display: none;
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: 50%;
+  bottom: 0px;
+}
+#bg img {
+  height: 100%;
+}
+#generation-choose,
+#init-game,
+#guess-game,
+#upload,
+#select-template,
+#final-present {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 50%;
 }
 #cover {
   position: relative;
@@ -61,87 +89,156 @@ a {
   display: none;
   height: 100%;
 }
-#generation-choose .container {
-  height: 100%;
+#generation-choose .title {
+  margin-top: 40%;
 }
-#generation-choose .placeholder {
-  height: 50%;
+#generation-choose .title img {
+  width: 100%;
+}
+#generation-choose .btn-block {
+  width: 100%;
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
+#generation-choose .btn-block #g80,
+#generation-choose .btn-block #g90 {
+  width: 75%;
+  margin: 6% auto;
+}
+#generation-choose .btn-block .g80-btn,
+#generation-choose .btn-block .g90-btn {
+  width: 70%;
+}
+#generation-choose .jushuo img {
+  width: 100%;
 }
 #init-game {
   display: none;
   height: 100%;
 }
-#init-game .container {
-  height: 100%;
+#init-game .wrapper {
+  width: 80%;
+  margin: 0 auto;
 }
-#init-game .full {
-  height: 100%;
+#init-game .wrapper .title {
+  margin-top: 50%;
+  margin-bottom: 20%;
 }
-#init-game img {
+#init-game .wrapper .title img {
+  width: 65%;
+}
+#init-game .wrapper #img-puzzle-group .tl,
+#init-game .wrapper #img-puzzle-group .tr,
+#init-game .wrapper #img-puzzle-group .bl,
+#init-game .wrapper #img-puzzle-group .br {
   width: 50%;
-  border: 5px solid white;
+  border: 10px solid white;
+  min-height: 22.606%;
 }
-#init-game .btn-line {
+#init-game .wrapper #img-puzzle-group .tl {
+  border-right-width: 5px;
+}
+#init-game .wrapper #img-puzzle-group .tr {
+  border-left-width: 5px;
+}
+#init-game .wrapper .btn-line {
   text-align: center;
-  margin-top: 5%;
+  margin-top: 20%;
 }
-#init-game .btn-line #reset-group,
-#init-game .btn-line #start-guess {
-  width: 100%;
+#init-game .wrapper .btn-line #reset-group,
+#init-game .wrapper .btn-line #start-guess {
+  width: 46%;
+  margin: 0 2%;
+}
+#init-game .wrapper .btn-line #reset-group img,
+#init-game .wrapper .btn-line #start-guess img {
+  margin: 0 -7%;
+  width: 114%;
 }
 #guess-game {
   display: none;
+  height: 100%;
 }
-#guess-game .center {
-  text-align: center;
+#guess-game .wrapper {
+  width: 78%;
+  margin: 0 auto;
 }
-#guess-game .main-pic-wrapper {
+#guess-game .wrapper .title {
+  margin-top: 35%;
+  margin-bottom: 5%;
+}
+#guess-game .wrapper .title img {
+  width: 75%;
+}
+#guess-game .wrapper .title .pg-wrapper {
+  float: right;
+}
+#guess-game .wrapper .title .pg-wrapper .pg {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+}
+#guess-game .wrapper .main-pic-wrapper {
   position: relative;
 }
-#guess-game .main-pic-wrapper .main-pic {
+#guess-game .wrapper .main-pic-wrapper .main-pic {
   width: 100%;
+  min-height: 43.983%;
   border: 10px solid white;
 }
-#guess-game .main-pic-wrapper #main-mask {
+#guess-game .wrapper .main-pic-wrapper #main-mask,
+#guess-game .wrapper .main-pic-wrapper #main-mask-2 {
   position: absolute;
   display: none;
   width: 100%;
   height: 100%;
   top: 0px;
+  left: 0;
   background-color: rgba(0, 0, 0, 0.75);
+  text-align: center;
 }
-#guess-game .main-pic-wrapper #main-mask p {
-  color: white;
-  font-size: 80px;
-  position: relative;
+#guess-game .wrapper .main-pic-wrapper #main-mask img,
+#guess-game .wrapper .main-pic-wrapper #main-mask-2 img {
+  position: absolute;
+  width: 85%;
   top: 50%;
-  margin-top: -40px;
+  left: 7.5%;
 }
-#guess-game .answer-line {
-  margin-top: 20px;
+#guess-game .wrapper .main-pic-wrapper #main-mask img {
+  margin-top: -17.5px;
 }
-#guess-game .answer-line .charactor {
+#guess-game .wrapper .main-pic-wrapper #main-mask-2 img {
+  margin-top: -35px;
+}
+#guess-game .wrapper .answer-line {
+  margin-top: 5%;
+  text-align: center;
+}
+#guess-game .wrapper .answer-line .charactor {
   display: inline-block;
   font-size: 20px;
   width: 34px;
   line-height: 30px;
   border: 1px solid #a5a5a5;
   padding: 1px;
-  margin: 0 5px;
+  margin: 5px;
   background-color: white;
-}
-#guess-game .btn-line {
-  margin-top: 20px;
+  border-radius: 0px;
   text-align: center;
 }
-#guess-game .btn-line #check,
-#guess-game .btn-line #return {
-  width: 100%;
+#guess-game .wrapper .btn-line {
+  margin-top: 5%;
+  text-align: center;
 }
-#guess-game .btn-line #start-upload {
+#guess-game .wrapper .btn-line #check,
+#guess-game .wrapper .btn-line #return {
+  width: 46%;
+  margin: 0 2%;
+}
+#guess-game .wrapper .btn-line #start-upload {
   width: 60%;
 }
-#guess-game #f-err {
+#guess-game .wrapper #f-err {
   text-align: center;
   color: #ea4517;
   display: none;
@@ -149,8 +246,14 @@ a {
 #upload {
   display: none;
 }
+#upload .title {
+  margin-top: 32%;
+  margin-bottom: 10px;
+}
+#upload .title img {
+  max-width: 100%;
+}
 #upload #uploader-wrapper {
-  margin-top: 40%;
   width: 100%;
   height: 300px;
   background-color: white;
@@ -160,6 +263,7 @@ a {
   height: 100%;
   cursor: pointer;
   vertical-align: middle;
+  text-align: center;
 }
 #upload #uploader-wrapper span {
   position: relative;
@@ -174,10 +278,16 @@ a {
   margin-bottom: -24px;
 }
 #upload #uploader-wrapper #photo-preview {
-  width: 100%;
+  width: 300px;
+  height: 220px;
   position: relative;
-  top: -20px;
+  top: 50%;
   z-index: 2;
+  margin-top: -130px;
+  display: none;
+}
+#upload #progress {
+  text-align: center;
 }
 #upload #next-select {
   width: 100%;
@@ -185,12 +295,83 @@ a {
 }
 #select-template {
   display: none;
+  height: 100%;
 }
-#select-template .thumb-tmpl-w {
-  width: 100%;
+#select-template .wrapper {
+  width: 78%;
+  margin: 0 auto;
 }
-#select-template .thumb-tmpl-h {
+#select-template .wrapper #m-temp-line {
+  position: absolute;
+  top: 14%;
+  left: 0;
   width: 100%;
+  height: 50%;
+  padding-top: 20%;
+  text-align: center;
+}
+#select-template .wrapper #m-temp-line.h {
+  padding-top: 0;
+}
+#select-template .wrapper #m-temp-line span {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  font-size: 40px;
+  top: 50%;
+  margin-top: -20px;
+  color: #a5a5a5;
+  z-index: 1;
+  left: 0px;
+}
+#select-template .wrapper #m-temp-line #m-template {
+  max-width: 100%;
+  max-height: 100%;
+}
+#select-template .wrapper .tmpls-line {
+  position: absolute;
+  top: 70%;
+  left: 0;
+  width: 100%;
+  background-color: #B4A38C;
+  text-align: center;
+}
+#select-template .wrapper .tmpls-line .tmpl-btn-wrapper {
+  display: inline-block;
+  text-align: center;
+  width: 25%;
+}
+#select-template .wrapper .tmpls-line .tmpl-btn-wrapper .thumb-tmpl {
+  height: 50px;
+}
+#select-template .wrapper .tmpls-line .tmpl-btn-wrapper .tmpl-btn {
+  cursor: pointer;
+  border: 1px solid white;
+}
+#select-template .wrapper .tmpls-line .tmpl-btn-wrapper .tmpl-btn.active {
+  border: 1px solid black;
+}
+#select-template .wrapper .btn-line {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+}
+#select-template .wrapper .btn-line #save,
+#select-template .wrapper .btn-line #share {
+  width: 38%;
+  margin: 0 2%;
+}
+#select-template .wrapper .btn-line #save .btn-img,
+#select-template .wrapper .btn-line #share .btn-img {
+  width: 35%;
+}
+#select-template .wrapper .btn-line #save {
+  margin-left: 10%;
+}
+#select-template .wrapper .btn-line #share {
+  margin-right: 10%;
 }
 #final-present {
   display: none;

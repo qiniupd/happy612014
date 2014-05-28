@@ -1,63 +1,88 @@
 #guess-game {
 	display: none;
+	height: 100%;
+	.wrapper {
+        width: 78%;
+        margin: 0 auto;
 
-	.center {
-		text-align: center;
-	}
+		.title {
+	        margin-top: 35%;
+	        margin-bottom: 5%;
+	        img {
+	        	width: 75%;
+	        }
+	        .pg-wrapper {
+	        	float: right;
+		        .pg {
+		        	font-weight: bold;
+		        	font-size: 24px;
+		        	line-height: 24px;
+		        }
+	        }
+    	}
 
-	.main-pic-wrapper {
-		position: relative;
-		.main-pic {
-			width: 100%;
-			border: 10px solid white;
-			// height: 400px;
-			// width: 400px;
+		.main-pic-wrapper {
+			position: relative;
+
+			.main-pic {
+				width: 100%;
+                min-height: 43.983%;
+				border: 10px solid white;
+			}
+
+			#main-mask, #main-mask-2 {
+				position: absolute;
+				display: none;
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0;
+				background-color: rgba(0,0,0,0.75);
+				text-align: center;
+				img {
+					position: absolute;
+					width: 85%;
+					top: 50%;
+					left: 7.5%;
+				}
+			}
+			#main-mask img { margin-top: -35/2px; }
+			#main-mask-2 img { margin-top: -35px; }
 		}
-		#main-mask {
-			position: absolute;
-			display: none;
-			width: 100%;
-			height: 100%;
-			top: 0px;
-			background-color: rgba(0,0,0,0.75);
-			p {
-				color: white;
-				font-size: 80px;
-				position: relative;
-				top: 50%;
-				margin-top: -40px;
+
+		.answer-line {
+			margin-top: 5%;
+			text-align: center;
+			.charactor {
+				display: inline-block;
+				font-size: 20px;
+				width: 34px;
+				line-height: 30px;
+				border: 1px solid #a5a5a5;
+				padding: 1px;
+				margin: 5px;
+				background-color: white;
+				border-radius: 0px;
+				text-align: center;
 			}
 		}
-	}
 
-	.answer-line {
-		margin-top: 20px;
-		.charactor {
-			display: inline-block;
-			font-size: 20px;
-			width: 34px;
-			line-height: 30px;
-			border: 1px solid #a5a5a5;
-			padding: 1px;
-			margin: 0 5px;
-			background-color: white;
+		.btn-line {
+			margin-top: 5%;
+			text-align: center;
+			#check, #return {
+				width: 46%;
+				margin: 0 2%;
+			}
+			#start-upload {
+				width: 60%;
+			}
 		}
-	}
 
-	.btn-line {
-		margin-top: 20px;
-		text-align: center;
-		#check, #return {
-			width: 100%;
+		#f-err {
+			text-align: center;
+			color: #ea4517;
+			display: none;
 		}
-		#start-upload {
-			width: 60%;
-		}
-	}
-
-	#f-err {
-		text-align: center;
-		color: #ea4517;
-		display: none;
-	}
+    }
 }

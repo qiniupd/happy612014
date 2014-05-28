@@ -1,25 +1,55 @@
 div#guess-game
-  div.container
-    div.row
-      div.col-md-12
-        h2
-          | 根据你的记忆填写名称吧
-          span.pg
-    div.row
-      div.col-md-6.col-md-offset-3.center
-        div.main-pic-wrapper
-          img.main-pic
-          div#main-mask
-            p 正确
-    div.row
-      div.col-md-6.col-md-offset-3.center.answer-line
-    div.row
-      div.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.btn-line
-        div.row
-          div.col-md-6.col-sm-6.col-xs-6
-            button.btn.btn-lg.btn-main#return 太难了，换一组
-          div.col-md-6.col-sm-6.col-xs-6
-            button.btn.btn-lg.btn-main#check 下一张
-    div.row
-      div.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3
-        h3#f-err 不好意思填错了哦
+  div.wrapper
+    div.title
+      img(src="img/guess-title.png")
+      div.pg-wrapper
+        span.pg
+
+    div.main-pic-wrapper
+      img.main-pic
+      div#main-mask
+        img.btn-img(src="img/main-mask.png")
+      div#main-mask-2
+        img.btn-img(src="img/main-mask-2.png")
+
+    div.answer-line
+
+    div.btn-line
+      button.btn.btn-lg.btn-main#return(tabindex="-1")
+        img.btn-img(src="img/return.png")
+      button.btn.btn-lg.btn-main#check
+        img.btn-img(src="img/check.png")
+
+    h3#f-err 不好意思填错了哦
+
+  //- div.container
+  //-   div.row
+  //-     div.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3
+  //-       div.row.title
+  //-         div.col-md-8.col-sm-8.col-xs-8
+  //-           img(src="img/guess-title.png")
+  //-         div.col-md-4.col-sm-4.col-xs-4.pg-wrapper
+  //-           span.pg
+  //-     div.col-md-8.col-md-offset-2
+  //-       div.row
+  //-         div.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2.col-xs-12.center
+  //-           div.main-pic-wrapper
+  //-             img.main-pic
+  //-             div#main-mask
+  //-               img.btn-img(src="img/main-mask.png")
+  //-             div#main-mask-2
+  //-               img.btn-img(src="img/main-mask-2.png")
+  //-   div.row
+  //-     div.col-md-6.col-md-offset-3.center.answer-line
+  //-   div.row
+  //-     div.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.btn-line
+  //-       div.row
+  //-         div.col-md-6.col-sm-6.col-xs-6
+  //-           button.btn.btn-lg.btn-main#return
+  //-             img.btn-img(src="img/return.png")
+  //-         div.col-md-6.col-sm-6.col-xs-6
+  //-           button.btn.btn-lg.btn-main#check
+  //-             img.btn-img(src="img/check.png")
+  //-   div.row
+  //-     div.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3
+  //-       h3#f-err 不好意思填错了哦

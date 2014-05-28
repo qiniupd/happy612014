@@ -7,111 +7,117 @@ var Q = window.Q || {};
 
 Q.photoUrl = '';
 
-Q.initPluploader = function(browse_button_id, container_id, progress_id, error_id) {
-    var uploader = new plupload.Uploader({
-        runtimes: 'html5,flash,silverlight,html4',
-        browse_button: document.getElementById(browse_button_id),
-        container: document.getElementById(container_id),
-        max_file_size: '100mb',
-        url: 'http://up.qiniu.com',
-        flash_swf_url: 'js/plupload/Moxie.swf',
-        silverlight_xap_url: 'js/plupload/Moxie.xap',
-        multi_selection: false,
-        filters: {
-            mime_types: [{
-                title: "Image files",
-                extensions: "jpg,gif,png"
-            }]
-        },
-        multipart: true,
-        multipart_params: {
-            key: '',
-            token: ''
-        }
-    });
-
-    uploader.bind('Init', function(up, params) {
-        //显示当前上传方式，调试用
-        $.ajax({
-            url: '/token',
-            type: 'GET',
-            cache: false,
-            success: function(data) {
-                if (data && data.token) {
-                    up.settings.multipart_params.token = data.token;
-                }
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-    uploader.init();
-
-    uploader.bind('FilesAdded', function(up, files) {
-        up.start();
-        up.refresh(); // Reposition Flash/Silverlight
-    });
-
-    uploader.bind('BeforeUpload', function(up, file) {
-        var prefix = '';
-        switch (browse_button_id) {
-            case 'uploadAvatar':
-                prefix = 'avatar/';
-                break;
-            case 'uploadPhoto':
-                prefix = 'photo/';
-                break;
-            case 'upload-btn':
-                prefix = 'photo/';
-                break;
-            default:
-                prefix = 'default/';
-        }
-        prefix += (new Date()).valueOf() + '/';
-        up.settings.multipart_params.key = prefix + file.name;
-    });
-
-    uploader.bind('UploadProgress', function(up, file) {
-        document.getElementById(progress_id).innerHTML = file.percent + "%," + up.total.bytesPerSec;
-    });
-
-    uploader.bind('Error', function(up, err) {
-        document.getElementById(error_id).innerHTML += "\nError #" + err.code + ": " + err.message;
-        up.refresh(); // Reposition Flash/Silverlight
-    });
-
-
-    uploader.bind('FileUploaded', function(up, file, info) {
-        var res = $.parseJSON(info.response);
-        var link = 'http://hc61.qiniudn.com/';
-        // if (res.key.indexOf('avatar/') > -1) {
-        //     Q.avatarUrl = link + res.key;
-        //     $('#avatar-preview').attr('src', Q.avatarUrl + '-ava');
-        // } else if (res.key.indexOf('photo/') > -1) {
-        //     Q.setPhoto(link + res.key);
-        // }
-        Q.photoUrl = link + res.key;
-        $('#photo-preview').attr('src', Q.photoUrl);
-        document.getElementById(progress_id).innerHTML = '上传成功';
-    });
+Q.d = function(x, y) {
+    return '/dx/' + x + '/dy/' + y + '/gravity/NorthWest';
 };
 
-Q.setPhoto = function(url) {
-    Q.photoUrl = url;
-    if (!Q.photoUrl) {
-        $('.photo-preview-wrapper').hide();
-        return;
-    }
-    $('.photo-preview-wrapper').show().find('.info-text').text('加载中...');
-    Q.imgReady(Q.photoUrl, function() {
-        Q.photoSize.width = this.width;
-        Q.photoSize.height = this.height;
-    }, function() {
-        $('.photo-preview-wrapper').find('.info-text').text('预览：');
-        $('.photo-preview-wrapper').find('#photo-preview').attr('src', Q.photoUrl);
-    }, null);
+Q.image = function(url, dx, dy) {
+    return '/image/' + Q.encode(url) + Q.d(dx, dy);
 };
+
+// Q.initPluploader = function(browse_button_id, container_id, progress_id, error_id) {
+//     var uploader = new plupload.Uploader({
+//         runtimes: 'html5,flash,silverlight,html4',
+//         browse_button: document.getElementById(browse_button_id),
+//         container: document.getElementById(container_id),
+//         max_file_size: '100mb',
+//         url: 'http://up.qiniu.com',
+//         flash_swf_url: 'js/plupload/Moxie.swf',
+//         silverlight_xap_url: 'js/plupload/Moxie.xap',
+//         multi_selection: false,
+//         filters: {
+//             mime_types: [{
+//                 title: "Image files",
+//                 extensions: "jpg,gif,png"
+//             }]
+//         },
+//         multipart: true,
+//         multipart_params: {
+//             key: '',
+//             token: ''
+//         }
+//     });
+
+//     uploader.bind('Init', function(up, params) {
+//         //显示当前上传方式，调试用
+//         $.ajax({
+//             url: '/token',
+//             type: 'GET',
+//             cache: false,
+//             success: function(data) {
+//                 if (data && data.token) {
+//                     up.settings.multipart_params.token = data.token;
+//                 }
+//             },
+//             error: function(error) {
+//                 console.log(error);
+//             }
+//         });
+//     });
+//     uploader.init();
+
+//     uploader.bind('FilesAdded', function(up, files) {
+//         up.start();
+//         up.refresh(); // Reposition Flash/Silverlight
+//     });
+
+//     uploader.bind('BeforeUpload', function(up, file) {
+//         var prefix = '';
+//         switch (browse_button_id) {
+//             case 'uploadAvatar':
+//                 prefix = 'avatar/';
+//                 break;
+//             case 'uploadPhoto':
+//                 prefix = 'photo/';
+//                 break;
+//             case 'upload-btn':
+//                 prefix = 'photo/';
+//                 break;
+//             default:
+//                 prefix = 'default/';
+//         }
+//         $('#photo-preview').hide();
+//         $('#upload-btn').find('span').text('上传中...');
+//         prefix += (new Date()).valueOf() + '/';
+//         up.settings.multipart_params.key = prefix + file.name;
+//     });
+
+//     uploader.bind('UploadProgress', function(up, file) {
+//         document.getElementById(progress_id).innerHTML = file.percent + "%," + up.total.bytesPerSec;
+//     });
+
+//     uploader.bind('Error', function(up, err) {
+//         document.getElementById(error_id).innerHTML += "\nError #" + err.code + ": " + err.message;
+//         up.refresh(); // Reposition Flash/Silverlight
+//     });
+
+
+//     uploader.bind('FileUploaded', function(up, file, info) {
+//         var res = $.parseJSON(info.response);
+//         var link = 'http://hc61.qiniudn.com/';
+//         Q.photoUrl = link + res.key;
+//         $('#photo-preview').attr('src', Q.photoUrl + '-32221').show();
+//         $('#upload-btn').find('span').text('点击重新上传');
+//         // document.getElementById(progress_id).innerHTML = '上传成功';
+//         document.getElementById(progress_id).innerHTML = '';
+//     });
+// };
+
+// Q.setPhoto = function(url) {
+//     Q.photoUrl = url;
+//     if (!Q.photoUrl) {
+//         $('.photo-preview-wrapper').hide();
+//         return;
+//     }
+//     $('.photo-preview-wrapper').show().find('.info-text').text('加载中...');
+//     Q.imgReady(Q.photoUrl, function() {
+//         Q.photoSize.width = this.width;
+//         Q.photoSize.height = this.height;
+//     }, function() {
+//         $('.photo-preview-wrapper').find('.info-text').text('预览：');
+//         $('.photo-preview-wrapper').find('#photo-preview').attr('src', Q.photoUrl);
+//     }, null);
+// };
 
 Q.imgReady = (function() {
     var list = [],
@@ -191,15 +197,39 @@ var Local = window.Local || {};
 Local.generation = '';
 
 $(function() {
+
+    var steps = [
+        '#generation-choose',
+        '#init-game',
+        '#guess-game',
+        '#upload',
+        '#select-template'
+    ];
+
     var h = window.innerHeight,
         w = window.innerWidth;
 
     $('#cover').css('width', w);
     $('#cover').css('height', h);
 
+    var bgsrc = '../img/4.png';
+    Q.imgReady(bgsrc, function() {}, function() {
+        $('#bg').attr('src', bgsrc);
+        var bgw = $('#bg').width();
+        var bgw = 640 / 1136 * h;
+        $('#bg').css('marginLeft', -(bgw / 2));
+
+        for (var i = 0; i < steps.length; i++) {
+            var b = $(steps[i]);
+            b.css('height', h);
+            b.css('width', bgw);
+            b.css('marginLeft', -(bgw / 2));
+        }
+    }, null);
+
     var dn = 'http://hc61.qiniudn.com/';
 
-    Q.initPluploader('upload-btn', 'uploader-wrapper', 'progress', 'error');
+    // Q.initPluploader('upload-btn', 'uploader-wrapper', 'progress', 'error');
 
     $('.swiper-container').swiper({
         //Your options here:
@@ -217,6 +247,7 @@ $(function() {
     $('#gc').click(function() {
         $('#cover').hide(0);
         $('#generation-choose').show(0);
+        $('#bg').show(0);
     });
 
     var generation = '';
@@ -241,7 +272,7 @@ $(function() {
 
     var g80Pre = dn + 'g80/',
         g90Pre = dn + 'g90/',
-        suf1 = '-4004';
+        suf1 = '-3005';
     var allQuestions = {
         g80: [{
             imgurl: g80Pre + '1.jpg',
@@ -290,35 +321,47 @@ $(function() {
             answer: '拨浪鼓'
         }],
         g90: [{
-            imgurl: '90-1',
-            answer: 'abcd'
+            imgurl: g90Pre + '1.jpeg',
+            answer: '东南西北'
         }, {
-            imgurl: '90-2',
-            answer: 'abcd'
+            imgurl: g90Pre + '2.jpg',
+            answer: 'windows98'
         }, {
-            imgurl: '90-3',
-            answer: 'abcd'
+            imgurl: g90Pre + '3.jpg',
+            answer: '机器猫'
         }, {
-            imgurl: '90-4',
-            answer: 'abcd'
+            imgurl: g90Pre + '4.jpg',
+            answer: '红白机'
         }, {
-            imgurl: '90-5',
-            answer: 'abcd'
+            imgurl: g90Pre + '5.jpg',
+            answer: '魂斗罗'
         }, {
-            imgurl: '90-6',
-            answer: 'abcd'
+            imgurl: g90Pre + '6.jpg',
+            answer: '超级玛丽'
         }, {
-            imgurl: '90-7',
-            answer: 'abcd'
+            imgurl: g90Pre + '7.jpg',
+            answer: '大大泡泡糖'
         }, {
-            imgurl: '90-8',
-            answer: 'abcd'
+            imgurl: g90Pre + '8.jpg',
+            answer: '拍卡'
         }, {
-            imgurl: '90-9',
-            answer: 'abcd'
+            imgurl: g90Pre + '9.jpg',
+            answer: '飞行棋'
         }, {
-            imgurl: '90-10',
-            answer: 'abcd'
+            imgurl: g90Pre + '10.jpg',
+            answer: '忍者神龟'
+        }, {
+            imgurl: g90Pre + '11.jpg',
+            answer: '弹玻璃球'
+        }, {
+            imgurl: g90Pre + '12.jpg',
+            answer: '小浣熊干脆面'
+        }, {
+            imgurl: g90Pre + '13.png',
+            answer: '娃哈哈AD钙奶'
+        }, {
+            imgurl: g90Pre + '14.gif',
+            answer: '386'
         }]
     };
 
@@ -330,27 +373,26 @@ $(function() {
             l[index] = l[i];
             l[i] = t;
         }
-        var ret = l.slice(0, 4);
+        var ret = l.slice(0, 2);
         // console.log([ret[0].imgurl, ret[1].imgurl, ret[2].imgurl, ret[3].imgurl]);
         questionGroup = ret;
 
         var p = $('#img-puzzle-group');
         p.find('.tl').attr('src', ret[0].imgurl + suf1);
         p.find('.tr').attr('src', ret[1].imgurl + suf1);
-        p.find('.bl').attr('src', ret[2].imgurl + suf1);
-        p.find('.br').attr('src', ret[3].imgurl + suf1);
+        // p.find('.bl').attr('src', ret[2].imgurl + suf1);
+        // p.find('.br').attr('src', ret[3].imgurl + suf1);
 
         return ret;
     };
 
     $('#reset-group').click(randomQuestionGroup);
 
-    var allLen = 4;
+    var allLen = 2;
     var pass = 1;
     // var passUrl = [];
 
     var initGame = function() {
-        allLen = 4;
         pass = 1;
         setGuess();
     };
@@ -361,7 +403,7 @@ $(function() {
 
         $('#guess-game').find('.main-pic').attr('src', question.imgurl + suf1);
 
-        var tmplInput = $('<input type="text" class="charactor">');
+        var tmplInput = $('<input type="text" maxlength="1" class="charactor">');
         var tmplMask = $('<span class="charactor"></span>');
         var cs = $('<div class="answers-wrapper"></div>');
 
@@ -382,15 +424,18 @@ $(function() {
         // debugger;
         $('#guess-game').find('.answer-line').html('');
         $('#guess-game').find('.answer-line').append(cs);
+        $('#guess-game').find('.answers-wrapper').find('input:first').focus();
     };
 
     $('#return').click(function() {
         $('#guess-game').hide(0);
         $('#init-game').show(0);
+        randomQuestionGroup();
     });
 
     var canCheck = true;
-    $('#check').click(function() {
+
+    var checkAnswer = function() {
         if (canCheck) {
             var a = '';
             $('#guess-game').find('.charactor').each(function() {
@@ -400,7 +445,7 @@ $(function() {
                     a += $(this).text();
                 }
             });
-            if (a !== questionGroup[pass - 1].answer) {
+            if (a.toLowerCase() !== questionGroup[pass - 1].answer.toLowerCase()) {
                 $('#f-err').show();
                 return;
             }
@@ -408,40 +453,134 @@ $(function() {
             pass += 1;
             if (pass <= allLen) {
                 canCheck = false;
-                $('#main-mask').slideDown(200, function() {
+                $('#main-mask').show(0, function() {
                     window.setTimeout(function() {
-                        $('#main-mask').slideUp();
+                        $('#main-mask').hide();
                         canCheck = true;
                         setGuess();
-                    }, 800);
+                    }, 1000);
                 });
                 return;
             }
+            canCheck = false;
+            $('#main-mask-2').show(0);
             // alert('all clear');
             $('#guess-game').find('.btn-line').html('');
-            $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main">生成明信片</button>');
+            $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
+        }
+    };
+
+    $('#check').click(checkAnswer);
+
+    $('body').on('keypress', function(e) {
+        if (e.keyCode === 13) {
+            checkAnswer();
         }
     });
 
+    // $('body').on('click', '#start-upload', function() {
+    //     $('#guess-game').hide(0);
+    //     $('#upload').show(0);
+    // });
+
+    // $('#next-select').click(function() {
+    //     // if (Q.photoUrl !== '') {
+    //     $('#upload').hide(0);
+    //     $('#select-template').show(0);
+    //     loadTmpl(0);
+    //     // } else {
+    //     // alert('请上传您的照片');
+    //     // }
+    // });
+
     $('body').on('click', '#start-upload', function() {
         $('#guess-game').hide(0);
-        $('#upload').show(0);
-    });
-
-    $('#next-select').click(function() {
-        // if (Q.photoUrl !== '') {
-        $('#upload').hide(0);
         $('#select-template').show(0);
-        // } else {
-        // alert('请上传您的照片');
-        // }
+        loadTmpl(0);
     });
 
-    $('#gc').click();
-    $('#g80').click();
-    $('#start-guess').click();
-    $('#guess-game').find('.btn-line').html('');
-    $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main">生成明信片</button>');
-    $('#start-upload').click();
-    // $('#next-select').click();
+    var amap = [
+        [499, 281],
+        [326, 366],
+        [362, 174]
+    ];
+    var tmap = [
+        [
+            [409, 26],
+            [763, 102],
+            [167, 390],
+            [836, 420]
+        ],
+        [
+            [326, 46],
+            [16, 201],
+            [16, 475],
+            [16, 758]
+        ],
+        [
+            [80, 50],
+            [529, 22],
+            [818, 114],
+            [818, 346]
+        ]
+    ];
+
+    var pmap = [2, 2, 2];
+    var tmplNum = 0;
+    Q.photoUrl = 'http://happy20140601.qiniudn.com/photo/1401160133645/ava.jpg';
+
+    var tSuf = '-32221';
+    var buildWatermark = function(n) {
+        var p = tmap[n];
+        var ret = '';
+        for (var i = 0; i < allLen; i++) {
+            ret += Q.image(questionGroup[i].imgurl + tSuf, p[i][0], p[i][1]);
+        }
+        if (Q.photoUrl !== '') {
+            ret += Q.image(Q.photoUrl + tSuf, amap[n][0], amap[n][1]);
+        }
+        return ret;
+    };
+
+    var loadTmpl = function(n) {
+        var turl = ['muban1.png', 'muban2.png', 'muban3.png'];
+        var mainUrl = dn + turl[n];
+        $('#m-template').hide();
+        $('#select-template').find('#m-temp-line').find('span').show().text('生成中...');
+        mainUrl += '?watermark/3' + buildWatermark(n);
+        Q.imgReady(mainUrl, function() {
+            $('#select-template').find('#m-temp-line').find('span').text('加载中...');
+        }, function() {
+            $('#m-template').attr('src', mainUrl);
+            $('#save').attr('href', mainUrl + '&download');
+            $('#select-template').find('#m-temp-line').find('span').hide();
+            $('#m-template').show();
+        }, null);
+        // $('#m-template').attr('src', mainUrl);
+        // $('#save').attr('href', mainUrl + '&download');
+    };
+
+    $('.tmpl-btn').click(function() {
+        var n = $(this).data('num');
+        if (n == 1) {
+            $('#select-template').find('#m-temp-line').addClass('h');
+        } else {
+            $('#select-template').find('#m-temp-line').removeClass('h');
+        }
+        $('.tmpl-btn').removeClass('active');
+        $(this).addClass('active');
+        loadTmpl(n);
+    });
+
+    window.setTimeout(function() {
+        $('#gc').click();
+        // $('#g80').click();
+        $('#g90').click();
+        $('#start-guess').click();
+        // $('#guess-game').find('.btn-line').html('');
+        // $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
+        // $('#start-upload').click();
+        // $('#next-select').click();
+    }, 500);
+
 });

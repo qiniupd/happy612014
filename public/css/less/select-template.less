@@ -1,11 +1,101 @@
 #select-template {
     display: none;
+    height: 100%;
 
-    .thumb-tmpl-w {
-        width: 100%;
+    .wrapper {
+        width: 78%;
+        margin: 0 auto;
+
+        #m-temp-line {
+            position: absolute;
+            top: 14%;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            padding-top: 20%;
+            &.h {
+                padding-top: 0;
+            }
+            text-align: center;
+            // min-height: 300px;
+
+            span {
+                position: absolute;
+                display: inline-block;
+                width: 100%;
+                font-size: 40px;
+                top: 50%;
+                margin-top: -20px;
+                color: #a5a5a5;
+                z-index: 1;
+                left: 0px;
+            }
+
+            #m-template {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        .tmpls-line {
+            position: absolute;
+            top: 70%;
+            left: 0;
+            width: 100%;
+            // margin-top: 160%;
+            background-color: #B4A38C;
+            text-align: center;
+
+            .tmpl-btn-wrapper {
+                display: inline-block;
+                text-align: center;
+                width: 25%;
+                // padding: 10px 0;
+
+                .thumb-tmpl {
+                    height: 50px;
+                }
+
+                // .thumb-tmpl-w {
+                //     height: 40px;
+                //     width: 25%;
+                // }
+
+                // .thumb-tmpl-h {
+                //     height: 80px;
+                //     width: 130px;
+                // }
+
+                .tmpl-btn {
+                    cursor: pointer;
+                    border: 1px solid white;
+                    &.active {
+                        border: 1px solid black;
+                    }
+                }
+            }
+        }
+
+        .btn-line {
+            position: absolute;
+            top: 80%;
+            left: 0;
+            width: 100%;
+            margin: 0 auto;
+            #save, #share {
+                width: 38%;
+                margin: 0 2%;
+                .btn-img {
+                    width: 35%
+                }
+            }
+            #save {
+                margin-left: 10%;
+            }
+            #share {
+                margin-right: 10%;
+            }
+        }
     }
 
-    .thumb-tmpl-h {
-        width: 100%;
-    }
 }
