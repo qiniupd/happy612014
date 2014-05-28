@@ -186,29 +186,34 @@ a {
   min-height: 43.983%;
   border: 10px solid white;
 }
-#guess-game .wrapper .main-pic-wrapper #main-mask,
-#guess-game .wrapper .main-pic-wrapper #main-mask-2 {
+#guess-game .wrapper .main-pic-wrapper #err-mask,
+#guess-game .wrapper .main-pic-wrapper #pass-mask {
   position: absolute;
   display: none;
   width: 100%;
   height: 100%;
   top: 0px;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.75);
   text-align: center;
 }
-#guess-game .wrapper .main-pic-wrapper #main-mask img,
-#guess-game .wrapper .main-pic-wrapper #main-mask-2 img {
+#guess-game .wrapper .main-pic-wrapper #err-mask img,
+#guess-game .wrapper .main-pic-wrapper #pass-mask img {
   position: absolute;
   width: 85%;
   top: 50%;
   left: 7.5%;
 }
-#guess-game .wrapper .main-pic-wrapper #main-mask img {
+#guess-game .wrapper .main-pic-wrapper #err-mask {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+#guess-game .wrapper .main-pic-wrapper #err-mask img {
   margin-top: -17.5px;
 }
-#guess-game .wrapper .main-pic-wrapper #main-mask-2 img {
-  margin-top: -35px;
+#guess-game .wrapper .main-pic-wrapper #pass-mask {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+#guess-game .wrapper .main-pic-wrapper #pass-mask img {
+  margin-top: -50px;
 }
 #guess-game .wrapper .answer-line {
   margin-top: 5%;
@@ -225,6 +230,10 @@ a {
   background-color: white;
   border-radius: 0px;
   text-align: center;
+}
+#guess-game .wrapper #check img {
+  width: 140%;
+  margin: 0 -20%;
 }
 #guess-game .wrapper .btn-line {
   margin-top: 5%;
@@ -297,21 +306,17 @@ a {
   display: none;
   height: 100%;
 }
-#select-template .wrapper {
-  width: 78%;
-  margin: 0 auto;
-}
 #select-template .wrapper #m-temp-line {
   position: absolute;
   top: 14%;
   left: 0;
   width: 100%;
   height: 50%;
-  padding-top: 20%;
+  padding-top: 0;
   text-align: center;
 }
 #select-template .wrapper #m-temp-line.h {
-  padding-top: 0;
+  padding-top: 16%;
 }
 #select-template .wrapper #m-temp-line span {
   position: absolute;
@@ -330,19 +335,26 @@ a {
 }
 #select-template .wrapper .tmpls-line {
   position: absolute;
-  top: 70%;
+  top: 66%;
   left: 0;
   width: 100%;
   background-color: #B4A38C;
   text-align: center;
+  padding: 3% 0;
 }
 #select-template .wrapper .tmpls-line .tmpl-btn-wrapper {
   display: inline-block;
   text-align: center;
-  width: 25%;
+  width: 20%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
-#select-template .wrapper .tmpls-line .tmpl-btn-wrapper .thumb-tmpl {
-  height: 50px;
+#select-template .wrapper .tmpls-line .tmpl-btn-wrapper #t2,
+#select-template .wrapper .tmpls-line .tmpl-btn-wrapper #t3 {
+  width: 40px;
+}
+#select-template .wrapper .tmpls-line .tmpl-btn-wrapper #t1 {
+  height: 40px;
 }
 #select-template .wrapper .tmpls-line .tmpl-btn-wrapper .tmpl-btn {
   cursor: pointer;
@@ -353,25 +365,34 @@ a {
 }
 #select-template .wrapper .btn-line {
   position: absolute;
-  top: 80%;
+  bottom: 5%;
   left: 0;
   width: 100%;
   margin: 0 auto;
-}
-#select-template .wrapper .btn-line #save,
-#select-template .wrapper .btn-line #share {
-  width: 38%;
-  margin: 0 2%;
-}
-#select-template .wrapper .btn-line #save .btn-img,
-#select-template .wrapper .btn-line #share .btn-img {
-  width: 35%;
-}
-#select-template .wrapper .btn-line #save {
-  margin-left: 10%;
+  text-align: center;
 }
 #select-template .wrapper .btn-line #share {
-  margin-right: 10%;
+  width: 50%;
+}
+#select-template .wrapper .btn-line #share img {
+  width: 75%;
+}
+#select-template .wrapper #retry {
+  position: absolute;
+  bottom: 5%;
+  right: 0;
+  font-size: 12px;
+}
+#select-template .wrapper #save-tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  font-size: 1.6em;
+  line-height: 2em;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 #final-present {
   display: none;

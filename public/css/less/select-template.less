@@ -3,8 +3,8 @@
     height: 100%;
 
     .wrapper {
-        width: 78%;
-        margin: 0 auto;
+        // width: 78%;
+        // margin: 0 auto;
 
         #m-temp-line {
             position: absolute;
@@ -12,9 +12,9 @@
             left: 0;
             width: 100%;
             height: 50%;
-            padding-top: 20%;
+            padding-top: 0;
             &.h {
-                padding-top: 0;
+                padding-top: 16%;
             }
             text-align: center;
             // min-height: 300px;
@@ -39,32 +39,28 @@
 
         .tmpls-line {
             position: absolute;
-            top: 70%;
+            top: 66%;
             left: 0;
             width: 100%;
             // margin-top: 160%;
             background-color: #B4A38C;
             text-align: center;
+            padding: 3% 0;
 
             .tmpl-btn-wrapper {
                 display: inline-block;
                 text-align: center;
-                width: 25%;
-                // padding: 10px 0;
+                width: 20%;
+                margin-left: 4%;
+                margin-right: 4%;
 
-                .thumb-tmpl {
-                    height: 50px;
+                #t2, #t3 {
+                    width: 40px;
                 }
 
-                // .thumb-tmpl-w {
-                //     height: 40px;
-                //     width: 25%;
-                // }
-
-                // .thumb-tmpl-h {
-                //     height: 80px;
-                //     width: 130px;
-                // }
+                #t1 {
+                    height: 40px;
+                }
 
                 .tmpl-btn {
                     cursor: pointer;
@@ -78,23 +74,55 @@
 
         .btn-line {
             position: absolute;
-            top: 80%;
+            // top: 78%;
+            bottom: 5%;
             left: 0;
             width: 100%;
             margin: 0 auto;
-            #save, #share {
-                width: 38%;
-                margin: 0 2%;
-                .btn-img {
-                    width: 35%
+            text-align: center;
+            // #save, #share {
+            //     width: 38%;
+            //     margin: 0 2%;
+            //     .btn-img {
+            //         width: 35%
+            //     }
+            // }
+            #share {
+                width: 50%;
+                img {
+                    width: 75%;
                 }
             }
-            #save {
-                margin-left: 10%;
-            }
-            #share {
-                margin-right: 10%;
-            }
+            // #save {
+            //     margin-left: 10%;
+            // }
+            // #share {
+            //     margin-right: 10%;
+            // }
+        }
+
+        #retry {
+            position: absolute;
+            bottom: 5%;
+            right: 0;
+            font-size: 12px;
+            // vertical-align: bottom;
+            // text-align: right;
+            // display: inline-block;
+            // float: right;
+        }
+
+        #save-tip {
+            position: fixed;
+            top: 0;
+            // bottom: 0;
+            left: 0;
+            text-align: center;
+            width: 100%;
+            font-size: 1.6em;
+            line-height: 2em;
+            color: white;
+            background-color: rgba(0,0,0,0.5);
         }
     }
 

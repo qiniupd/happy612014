@@ -7,17 +7,21 @@ div#select-template
 
     div.tmpls-line
       div.tmpl-btn-wrapper
-        img.tmpl-btn.thumb-tmpl.active(data-num="0", src="img/muban1.png")
+        img.tmpl-btn.thumb-tmpl.active#t1(data-num="0", src="http://happy20140601.qiniudn.com/m1.png-w100")
       div.tmpl-btn-wrapper
-        img.tmpl-btn.thumb-tmpl(data-num="1", src="img/muban2.png")
+        img.tmpl-btn.thumb-tmpl#t2(data-num="1", src="http://happy20140601.qiniudn.com/m2.jpg-h100")
       div.tmpl-btn-wrapper
-        img.tmpl-btn.thumb-tmpl(data-num="2", src="img/muban3.png")
+        img.tmpl-btn.thumb-tmpl#t3(data-num="2", src="http://happy20140601.qiniudn.com/m3.png-w100")
 
-    div.row.btn-line
-      button.btn.btn-lg.btn-main#save
-        img.btn-img(src="img/save.png")
-      button.btn.btn-lg.btn-main#share
-        img.btn-img(src="img/share.png")
+    p.save-tip#save-tip 长按图片可以将图片保存到手机
+
+    div.btn-line
+      //- button.btn.btn-lg.btn-main#save
+      //-   img.btn-img(src="img/save.png")
+      a.btn.btn-lg.btn-main#share(target="_blank")
+        img.btn-img(src="img/share-btn.png")
+
+    a#retry 再玩一次
 
 
   //- div.container

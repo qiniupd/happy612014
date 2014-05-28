@@ -1,7 +1,6 @@
 /* jshint undef: true, unused: true */
 /* jshint expr: true, boss: true */
 /* jshint browser: true, devel: true, jquery: true*/
-/* global plupload*/
 
 var Q = window.Q || {};
 
@@ -9,6 +8,17 @@ Q.photoUrl = '';
 
 Q.d = function(x, y) {
     return '/dx/' + x + '/dy/' + y + '/gravity/NorthWest';
+};
+
+Q.text = function(str, font, size, color, dx, dy) {
+    var t = Q.encode(str),
+        f = Q.encode(font),
+        c = Q.encode(color);
+    return '/text/' + t + '/font/' + f + '/fontsize/' + size * 20 + '/fill/' + c + Q.d(dx, dy);
+};
+
+Q.t = function(str, dx, dy, fontsize) {
+    return Q.text(str, '微软雅黑', fontsize, 'black', dx, dy);
 };
 
 Q.image = function(url, dx, dy) {
@@ -198,6 +208,8 @@ Local.generation = '';
 
 $(function() {
 
+    var SHARE_TEXT = '#猿忆童年# 那时候最幸福就是一边吃着娃娃头雪糕，玩着心爱的红白机或者386! 想要自己开发游戏，小光盘承载着少年的梦想与美好回忆，从过去到现在，我们一直在努力，为了理想做到更好！程序员，在这里找回你的童年！游戏传送门：http://61.qiniu.io';
+
     var steps = [
         '#generation-choose',
         '#init-game',
@@ -215,7 +227,7 @@ $(function() {
     var bgsrc = '../img/4.png';
     Q.imgReady(bgsrc, function() {}, function() {
         $('#bg').attr('src', bgsrc);
-        var bgw = $('#bg').width();
+        // var bgw = $('#bg').width();
         var bgw = 640 / 1136 * h;
         $('#bg').css('marginLeft', -(bgw / 2));
 
@@ -230,6 +242,20 @@ $(function() {
     var dn = 'http://hc61.qiniudn.com/';
 
     // Q.initPluploader('upload-btn', 'uploader-wrapper', 'progress', 'error');
+
+    var genWeiboShareLink = function(text, templUrl) {
+        var ShareText = encodeURIComponent(text);
+        // if (result === 'none') {
+        //     ShareText = encodeURIComponent('#牛头不对马嘴# 参与了七牛云存储的送土豪大礼的活动，等着土豪金，ipad, 机械键盘到我碗里来。小伙伴们转发我这条微博也有机会获得限量版男女牛小七公仔以及七牛笔记本一套！');
+        // } else {
+        //     ShareText = encodeURIComponent('#牛头不对马嘴# 一不小心在七牛云存储的活动中中奖了，一定要晒晒我的好手气！还要继续抽，土豪金，ipad，机械键盘快到碗里来哈。小伙伴们，转发我这条微博也有机会获得限量版男女牛小七公仔以及七牛笔记本一套！');
+        // }
+        var picUrl = encodeURIComponent(templUrl);
+        // var picUrl = encodeURIComponent('http://qiniu-images.qiniudn.com/newyear/newyear-weibo.png');
+        // var url = encodeURIComponent('http://61.qiniu.io');
+        var url = encodeURIComponent('http://61.qiniu.io');
+        return 'http://service.weibo.com/share/share.php?url=' + url + '&type=button&ralateUid=2651079901&language=zh_cn&appkey=3084908017&title=' + ShareText + '&pic=' + picUrl + '&searchPic=false&style=simple';
+    };
 
     $('.swiper-container').swiper({
         //Your options here:
@@ -270,7 +296,7 @@ $(function() {
         $('#guess-game').show(0, initGame);
     });
 
-    var g80Pre = dn + 'g80/',
+    var g80Pre = dn + 'g801/',
         g90Pre = dn + 'g90/',
         suf1 = '-3005';
     var allQuestions = {
@@ -291,7 +317,7 @@ $(function() {
             answer: 'penmac'
         }, {
             imgurl: g80Pre + '6.jpg',
-            answer: 'commodore64p'
+            answer: 'appleII'
         }, {
             imgurl: g80Pre + '7.jpg',
             answer: '棉花糖'
@@ -408,7 +434,7 @@ $(function() {
         var cs = $('<div class="answers-wrapper"></div>');
 
         var len = 0;
-        var cur = 0;
+        // var cur = 0;
 
         for (var i = 0; i < question.answer.length; i++) {
             if (i % 2 == 1) {
@@ -446,29 +472,36 @@ $(function() {
                 }
             });
             if (a.toLowerCase() !== questionGroup[pass - 1].answer.toLowerCase()) {
-                $('#f-err').show();
+                // $('#f-err').show();
+                $('#err-mask').show(0);
                 return;
             }
             $('#f-err').hide();
             pass += 1;
             if (pass <= allLen) {
                 canCheck = false;
-                $('#main-mask').show(0, function() {
-                    window.setTimeout(function() {
-                        $('#main-mask').hide();
-                        canCheck = true;
-                        setGuess();
-                    }, 1000);
-                });
+                // $('#main-mask').show(0, function() {
+                //     window.setTimeout(function() {
+                //         $('#main-mask').hide();
+                //         canCheck = true;
+                //         setGuess();
+                //     }, 1000);
+                // });
+                setGuess();
+                canCheck = true;
                 return;
             }
             canCheck = false;
-            $('#main-mask-2').show(0);
+            $('#pass-mask').show(0);
             // alert('all clear');
             $('#guess-game').find('.btn-line').html('');
             $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
         }
     };
+
+    $('#guess-game .answer-line').on('focus', 'input.charactor', function() {
+        $('#err-mask').hide();
+    });
 
     $('#check').click(checkAnswer);
 
@@ -495,55 +528,96 @@ $(function() {
 
     $('body').on('click', '#start-upload', function() {
         $('#guess-game').hide(0);
-        $('#select-template').show(0);
+        $('#select-template').show(0, function() {
+            $('#save-tip').css('top', 0);
+        });
         loadTmpl(0);
     });
 
-    var amap = [
-        [499, 281],
-        [326, 366],
-        [362, 174]
-    ];
-    var tmap = [
-        [
-            [409, 26],
-            [763, 102],
-            [167, 390],
-            [836, 420]
-        ],
-        [
-            [326, 46],
-            [16, 201],
-            [16, 475],
-            [16, 758]
-        ],
-        [
-            [80, 50],
-            [529, 22],
-            [818, 114],
-            [818, 346]
-        ]
-    ];
+    // var amap = [
+    //     [499, 281],
+    //     [326, 366],
+    //     [362, 174]
+    // ];
+    // var tmap = [
+    //     [
+    //         [409, 26],
+    //         [763, 102],
+    //         [167, 390],
+    //         [836, 420]
+    //     ],
+    //     [
+    //         [326, 46],
+    //         [16, 201],
+    //         [16, 475],
+    //         [16, 758]
+    //     ],
+    //     [
+    //         [80, 50],
+    //         [529, 22],
+    //         [818, 114],
+    //         [818, 346]
+    //     ]
+    // ];
 
-    var pmap = [2, 2, 2];
-    var tmplNum = 0;
-    Q.photoUrl = 'http://happy20140601.qiniudn.com/photo/1401160133645/ava.jpg';
+    // var pmap = [2, 2, 2];
+    // var tmplNum = 0;
+    // Q.photoUrl = 'http://happy20140601.qiniudn.com/photo/1401160133645/ava.jpg';
 
-    var tSuf = '-32221';
-    var buildWatermark = function(n) {
-        var p = tmap[n];
-        var ret = '';
-        for (var i = 0; i < allLen; i++) {
-            ret += Q.image(questionGroup[i].imgurl + tSuf, p[i][0], p[i][1]);
-        }
-        if (Q.photoUrl !== '') {
-            ret += Q.image(Q.photoUrl + tSuf, amap[n][0], amap[n][1]);
-        }
-        return ret;
+    var l1 = function() {
+        var r = '';
+        r += Q.image(questionGroup[0].imgurl + '-42311', 102, 121);
+        r += Q.image(questionGroup[1].imgurl + '-32221', 25, 540);
+        r += Q.t(questionGroup[0].answer, 101, 450, 30);
+        r += Q.t(questionGroup[1].answer, 24, 778, 30);
+        return r;
     };
 
+    var l2 = function() {
+        var r = '';
+        r += Q.image(questionGroup[0].imgurl + '-32221', 525, 68);
+        r += Q.image(questionGroup[1].imgurl + '-32221', 525, 372);
+        r += Q.t(questionGroup[0].answer, 525, 26, 30);
+        r += Q.t(questionGroup[1].answer, 525, 325, 30);
+        return r;
+    };
+
+    var l3 = function() {
+        var r = '';
+        r += Q.image(questionGroup[0].imgurl + '-32221', 180, 97);
+        r += Q.image(questionGroup[1].imgurl + '-32221', 566, 216);
+        r += Q.t(questionGroup[0].answer, 180, 340, 30);
+        r += Q.t(questionGroup[1].answer, 566, 160, 30);
+        return r;
+    };
+
+    // var tSuf = '-32221';
+
+    var buildWatermark = function(n) {
+        if (n === 0) {
+            return l1();
+        }
+        if (n == 1) {
+            return l2();
+        }
+        if (n == 2) {
+            return l3();
+        }
+        // var p = tmap[n];
+        // var ret = '';
+        // for (var i = 0; i < allLen; i++) {
+        //     ret += Q.image(questionGroup[i].imgurl + tSuf, p[i][0], p[i][1]);
+        // }
+        // if (Q.photoUrl !== '') {
+        //     ret += Q.image(Q.photoUrl + tSuf, amap[n][0], amap[n][1]);
+        // }
+        // return ret;
+    };
+
+    // var finalUrl = '';
+
     var loadTmpl = function(n) {
-        var turl = ['muban1.png', 'muban2.png', 'muban3.png'];
+        var turl = ['m1.png', 'm2.jpg', 'm3.png'];
         var mainUrl = dn + turl[n];
         $('#m-template').hide();
         $('#select-template').find('#m-temp-line').find('span').show().text('生成中...');
@@ -556,13 +630,16 @@ $(function() {
             $('#select-template').find('#m-temp-line').find('span').hide();
             $('#m-template').show();
         }, null);
+
+        // finalUrl = mainUrl + '&download';
+        $('#share').attr('href', genWeiboShareLink(SHARE_TEXT, mainUrl));
         // $('#m-template').attr('src', mainUrl);
         // $('#save').attr('href', mainUrl + '&download');
     };
 
     $('.tmpl-btn').click(function() {
         var n = $(this).data('num');
-        if (n == 1) {
+        if (n !== 0) {
             $('#select-template').find('#m-temp-line').addClass('h');
         } else {
             $('#select-template').find('#m-temp-line').removeClass('h');
@@ -572,15 +649,20 @@ $(function() {
         loadTmpl(n);
     });
 
-    window.setTimeout(function() {
-        $('#gc').click();
-        // $('#g80').click();
-        $('#g90').click();
-        $('#start-guess').click();
-        // $('#guess-game').find('.btn-line').html('');
-        // $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
-        // $('#start-upload').click();
-        // $('#next-select').click();
-    }, 500);
+    $('#retry').click(function() {
+        $('#select-template').hide(0);
+        $('#init-game').show(0, randomQuestionGroup);
+    });
+
+    // window.setTimeout(function() {
+    //     $('#gc').click();
+    //     // $('#g80').click();
+    //     $('#g90').click();
+    //     $('#start-guess').click();
+    //     $('#guess-game').find('.btn-line').html('');
+    //     $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
+    //     $('#start-upload').click();
+    //     $('#next-select').click();
+    // }, 500);
 
 });
