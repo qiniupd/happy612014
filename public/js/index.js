@@ -528,6 +528,7 @@ $(function() {
 
     $('body').on('click', '#start-upload', function() {
         $('#guess-game').hide(0);
+        $('#pass-mask').hide(0);
         $('#select-template').show(0, function() {
             $('#save-tip').css('top', 0);
         });
@@ -650,8 +651,9 @@ $(function() {
     });
 
     $('#retry').click(function() {
-        $('#select-template').hide(0);
-        $('#init-game').show(0, randomQuestionGroup);
+        // window.location.reload();
+        $('select-template').hide(0);
+        $('#generation-choose').show(0);
     });
 
     // window.setTimeout(function() {
