@@ -652,19 +652,19 @@ $(function() {
 
     $('#retry').click(function() {
         // window.location.reload();
-        $('select-template').hide(0);
+        $('#select-template').hide(0);
         $('#generation-choose').show(0);
     });
 
-    // window.setTimeout(function() {
-    //     $('#gc').click();
-    //     // $('#g80').click();
-    //     $('#g90').click();
-    //     $('#start-guess').click();
-    //     $('#guess-game').find('.btn-line').html('');
-    //     $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
-    //     $('#start-upload').click();
-    //     $('#next-select').click();
-    // }, 500);
+    window.setTimeout(function() {
+        $('#gc').click();
+        // $('#g80').click();
+        $('#g90').click();
+        $('#start-guess').click();
+        $('#guess-game').find('.btn-line').html('');
+        $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
+        $('#start-upload').click();
+        $('#next-select').click();
+    }, 500);
 
 });

@@ -382,6 +382,7 @@ a {
   bottom: 5%;
   right: 0;
   font-size: 12px;
+  cursor: pointer;
 }
 #select-template .wrapper #save-tip {
   position: fixed;
