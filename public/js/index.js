@@ -651,9 +651,9 @@ $(function() {
     });
 
     $('#retry').click(function() {
-        // window.location.reload();
-        $('#select-template').hide(0);
-        $('#generation-choose').show(0);
+        window.location.reload();
+        // $('#select-template').hide(0);
+        // $('#generation-choose').show(0);
     });
 
 });
