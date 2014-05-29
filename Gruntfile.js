@@ -18,14 +18,6 @@ module.exports = function(grunt) {
                 file: 'app.js'
             }
         },
-        less: {
-            development: {
-                files: [{
-                    src: 'public/css/less/style.less',
-                    dest: 'public/css/style.css'
-                }]
-            }
-        },
         watch: {
             options: {
                 nospawn: true,
@@ -43,10 +35,6 @@ module.exports = function(grunt) {
                 options: {
                     livereload: reloadPort
                 }
-            },
-            less: {
-                files: ['public/css/less/*.less'],
-                tasks: ['less:development']
             },
             css: {
                 files: ['public/css/*.css'],
@@ -66,8 +54,6 @@ module.exports = function(grunt) {
     grunt.config.requires('watch.server.files');
     files = grunt.config('watch.server.files');
     files = grunt.file.expand(files);
-
-    grunt.loadNpmTasks('grunt-contrib-less');
 
     grunt.registerTask('delayed-livereload', 'Live reload after the node server has restarted.', function() {
         var done = this.async();
