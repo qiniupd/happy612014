@@ -25,110 +25,6 @@ Q.image = function(url, dx, dy) {
     return '/image/' + Q.encode(url) + Q.d(dx, dy);
 };
 
-// Q.initPluploader = function(browse_button_id, container_id, progress_id, error_id) {
-//     var uploader = new plupload.Uploader({
-//         runtimes: 'html5,flash,silverlight,html4',
-//         browse_button: document.getElementById(browse_button_id),
-//         container: document.getElementById(container_id),
-//         max_file_size: '100mb',
-//         url: 'http://up.qiniu.com',
-//         flash_swf_url: 'js/plupload/Moxie.swf',
-//         silverlight_xap_url: 'js/plupload/Moxie.xap',
-//         multi_selection: false,
-//         filters: {
-//             mime_types: [{
-//                 title: "Image files",
-//                 extensions: "jpg,gif,png"
-//             }]
-//         },
-//         multipart: true,
-//         multipart_params: {
-//             key: '',
-//             token: ''
-//         }
-//     });
-
-//     uploader.bind('Init', function(up, params) {
-//         //显示当前上传方式，调试用
-//         $.ajax({
-//             url: '/token',
-//             type: 'GET',
-//             cache: false,
-//             success: function(data) {
-//                 if (data && data.token) {
-//                     up.settings.multipart_params.token = data.token;
-//                 }
-//             },
-//             error: function(error) {
-//                 console.log(error);
-//             }
-//         });
-//     });
-//     uploader.init();
-
-//     uploader.bind('FilesAdded', function(up, files) {
-//         up.start();
-//         up.refresh(); // Reposition Flash/Silverlight
-//     });
-
-//     uploader.bind('BeforeUpload', function(up, file) {
-//         var prefix = '';
-//         switch (browse_button_id) {
-//             case 'uploadAvatar':
-//                 prefix = 'avatar/';
-//                 break;
-//             case 'uploadPhoto':
-//                 prefix = 'photo/';
-//                 break;
-//             case 'upload-btn':
-//                 prefix = 'photo/';
-//                 break;
-//             default:
-//                 prefix = 'default/';
-//         }
-//         $('#photo-preview').hide();
-//         $('#upload-btn').find('span').text('上传中...');
-//         prefix += (new Date()).valueOf() + '/';
-//         up.settings.multipart_params.key = prefix + file.name;
-//     });
-
-//     uploader.bind('UploadProgress', function(up, file) {
-//         document.getElementById(progress_id).innerHTML = file.percent + "%," + up.total.bytesPerSec;
-//     });
-
-//     uploader.bind('Error', function(up, err) {
-//         document.getElementById(error_id).innerHTML += "\nError #" + err.code + ": " + err.message;
-//         up.refresh(); // Reposition Flash/Silverlight
-//     });
-
-
-//     uploader.bind('FileUploaded', function(up, file, info) {
-//         var res = $.parseJSON(info.response);
-//         var link = 'http://hc61.qiniudn.com/';
-//         Q.photoUrl = link + res.key;
-//         $('#photo-preview').attr('src', Q.photoUrl + '-32221').show();
-//         $('#upload-btn').find('span').text('点击重新上传');
-//         // document.getElementById(progress_id).innerHTML = '上传成功';
-//         document.getElementById(progress_id).innerHTML = '';
-//     });
-// };
-
-// Q.setPhoto = function(url) {
-//     Q.photoUrl = url;
-//     if (!Q.photoUrl) {
-//         $('.photo-preview-wrapper').hide();
-//         return;
-//     }
-//     $('.photo-preview-wrapper').show().find('.info-text').text('加载中...');
-//     Q.imgReady(Q.photoUrl, function() {
-//         Q.photoSize.width = this.width;
-//         Q.photoSize.height = this.height;
-//     }, function() {
-//         $('.photo-preview-wrapper').find('.info-text').text('预览：');
-//         $('.photo-preview-wrapper').find('#photo-preview').attr('src', Q.photoUrl);
-//     }, null);
-// };
-
 Q.imgReady = (function() {
     var list = [],
         intervalId = null,
@@ -223,11 +119,11 @@ $(function() {
 
     $('#cover').css('width', w);
     $('#cover').css('height', h);
+    $('.slide').css('height', h);
 
     var bgsrc = '../img/4.png';
     Q.imgReady(bgsrc, function() {}, function() {
         $('#bg').attr('src', bgsrc);
-        // var bgw = $('#bg').width();
         var bgw = 640 / 1136 * h;
         $('#bg').css('marginLeft', -(bgw / 2));
 
@@ -241,24 +137,14 @@ $(function() {
 
     var dn = 'http://hc61.qiniudn.com/';
 
-    // Q.initPluploader('upload-btn', 'uploader-wrapper', 'progress', 'error');
-
     var genWeiboShareLink = function(text, templUrl) {
         var ShareText = encodeURIComponent(text);
-        // if (result === 'none') {
-        //     ShareText = encodeURIComponent('#牛头不对马嘴# 参与了七牛云存储的送土豪大礼的活动，等着土豪金，ipad, 机械键盘到我碗里来。小伙伴们转发我这条微博也有机会获得限量版男女牛小七公仔以及七牛笔记本一套！');
-        // } else {
-        //     ShareText = encodeURIComponent('#牛头不对马嘴# 一不小心在七牛云存储的活动中中奖了，一定要晒晒我的好手气！还要继续抽，土豪金，ipad，机械键盘快到碗里来哈。小伙伴们，转发我这条微博也有机会获得限量版男女牛小七公仔以及七牛笔记本一套！');
-        // }
         var picUrl = encodeURIComponent(templUrl);
-        // var picUrl = encodeURIComponent('http://qiniu-images.qiniudn.com/newyear/newyear-weibo.png');
-        // var url = encodeURIComponent('http://61.qiniu.io');
         var url = encodeURIComponent('http://61.qiniu.io');
         return 'http://service.weibo.com/share/share.php?url=' + url + '&type=button&ralateUid=2651079901&language=zh_cn&appkey=3084908017&title=' + ShareText + '&pic=' + picUrl + '&searchPic=false&style=simple';
     };
 
     $('.swiper-container').swiper({
-        //Your options here:
         mode: 'horizontal',
         pagination: '#navigation',
         paginationAsRange: true,
@@ -266,8 +152,6 @@ $(function() {
         calculateHeight: true,
         keyboardControl: true,
         mousewheelControl: true
-        // cssWidthAndHeight: true
-        //etc..
     });
 
     $('#gc').click(function() {
@@ -400,14 +284,11 @@ $(function() {
             l[i] = t;
         }
         var ret = l.slice(0, 2);
-        // console.log([ret[0].imgurl, ret[1].imgurl, ret[2].imgurl, ret[3].imgurl]);
         questionGroup = ret;
 
         var p = $('#img-puzzle-group');
         p.find('.tl').attr('src', ret[0].imgurl + suf1);
         p.find('.tr').attr('src', ret[1].imgurl + suf1);
-        // p.find('.bl').attr('src', ret[2].imgurl + suf1);
-        // p.find('.br').attr('src', ret[3].imgurl + suf1);
 
         return ret;
     };
@@ -416,7 +297,6 @@ $(function() {
 
     var allLen = 2;
     var pass = 1;
-    // var passUrl = [];
 
     var initGame = function() {
         pass = 1;
@@ -434,7 +314,6 @@ $(function() {
         var cs = $('<div class="answers-wrapper"></div>');
 
         var len = 0;
-        // var cur = 0;
 
         for (var i = 0; i < question.answer.length; i++) {
             if (i % 2 == 1) {
@@ -447,7 +326,6 @@ $(function() {
                 cs.append(eleIn);
             }
         }
-        // debugger;
         $('#guess-game').find('.answer-line').html('');
         $('#guess-game').find('.answer-line').append(cs);
         $('#guess-game').find('.answers-wrapper').find('input:first').focus();
@@ -472,7 +350,6 @@ $(function() {
                 }
             });
             if (a.toLowerCase() !== questionGroup[pass - 1].answer.toLowerCase()) {
-                // $('#f-err').show();
                 $('#err-mask').show(0);
                 return;
             }
@@ -480,20 +357,12 @@ $(function() {
             pass += 1;
             if (pass <= allLen) {
                 canCheck = false;
-                // $('#main-mask').show(0, function() {
-                //     window.setTimeout(function() {
-                //         $('#main-mask').hide();
-                //         canCheck = true;
-                //         setGuess();
-                //     }, 1000);
-                // });
                 setGuess();
                 canCheck = true;
                 return;
             }
             canCheck = false;
             $('#pass-mask').show(0);
-            // alert('all clear');
             $('#guess-game').find('.btn-line').html('');
             $('#guess-game').find('.btn-line').append('<button id="start-upload" class="btn btn-lg btn-main"><img src="img/start-upload.png" class="btn-img"></button>');
         }
@@ -511,21 +380,6 @@ $(function() {
         }
     });
 
-    // $('body').on('click', '#start-upload', function() {
-    //     $('#guess-game').hide(0);
-    //     $('#upload').show(0);
-    // });
-
-    // $('#next-select').click(function() {
-    //     // if (Q.photoUrl !== '') {
-    //     $('#upload').hide(0);
-    //     $('#select-template').show(0);
-    //     loadTmpl(0);
-    //     // } else {
-    //     // alert('请上传您的照片');
-    //     // }
-    // });
-
     $('body').on('click', '#start-upload', function() {
         $('#guess-game').hide(0);
         $('#pass-mask').hide(0);
@@ -534,36 +388,6 @@ $(function() {
         });
         loadTmpl(0);
     });
-
-    // var amap = [
-    //     [499, 281],
-    //     [326, 366],
-    //     [362, 174]
-    // ];
-    // var tmap = [
-    //     [
-    //         [409, 26],
-    //         [763, 102],
-    //         [167, 390],
-    //         [836, 420]
-    //     ],
-    //     [
-    //         [326, 46],
-    //         [16, 201],
-    //         [16, 475],
-    //         [16, 758]
-    //     ],
-    //     [
-    //         [80, 50],
-    //         [529, 22],
-    //         [818, 114],
-    //         [818, 346]
-    //     ]
-    // ];
-
-    // var pmap = [2, 2, 2];
-    // var tmplNum = 0;
-    // Q.photoUrl = 'http://happy20140601.qiniudn.com/photo/1401160133645/ava.jpg';
 
     var l1 = function() {
         var r = '';
@@ -592,8 +416,6 @@ $(function() {
         return r;
     };
 
-    // var tSuf = '-32221';
-
     var buildWatermark = function(n) {
         if (n === 0) {
             return l1();
@@ -604,18 +426,7 @@ $(function() {
         if (n == 2) {
             return l3();
         }
-        // var p = tmap[n];
-        // var ret = '';
-        // for (var i = 0; i < allLen; i++) {
-        //     ret += Q.image(questionGroup[i].imgurl + tSuf, p[i][0], p[i][1]);
-        // }
-        // if (Q.photoUrl !== '') {
-        //     ret += Q.image(Q.photoUrl + tSuf, amap[n][0], amap[n][1]);
-        // }
-        // return ret;
     };
-
-    // var finalUrl = '';
 
     var loadTmpl = function(n) {
         var turl = ['m1.png', 'm2.jpg', 'm3.png'];
@@ -632,10 +443,7 @@ $(function() {
             $('#m-template').show();
         }, null);
 
-        // finalUrl = mainUrl + '&download';
         $('#share').attr('href', genWeiboShareLink(SHARE_TEXT, mainUrl));
-        // $('#m-template').attr('src', mainUrl);
-        // $('#save').attr('href', mainUrl + '&download');
     };
 
     $('.tmpl-btn').click(function() {
@@ -652,8 +460,6 @@ $(function() {
 
     $('#retry').click(function() {
         window.location.reload();
-        // $('#select-template').hide(0);
-        // $('#generation-choose').show(0);
     });
 
 });
